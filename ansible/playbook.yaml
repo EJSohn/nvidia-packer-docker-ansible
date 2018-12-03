@@ -1,6 +1,6 @@
-- hosts: all
-  become: true
-  become_method: sudo
+- hosts: localhost
+  connection: local
+  sudo: yes
   vars:
     daemon_json:
       bip: 192.168.99.1/24
