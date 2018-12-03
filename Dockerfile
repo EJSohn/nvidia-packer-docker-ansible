@@ -50,3 +50,8 @@ RUN git clone --depth 1 -b 3.4.1 https://github.com/opencv/opencv.git /opencv &&
 #     && pip3 install TensorRT-4.0.0.3/uff/uff-0.3.0-py2.py3-none-any.whl \
 #     && rm TensorRT-4.0.0.3 TensorRT-4.0.0.3.Ubuntu-16.04.4.x86_64-gnu.cuda-9.0.cudnn7.0.tar.gz -rf
 
+# Create workspace
+ADD . /code/
+ADD requirements.txt /code/
+RUN pip3 install -r /code/requirements.txt
+WORKDIR /code
