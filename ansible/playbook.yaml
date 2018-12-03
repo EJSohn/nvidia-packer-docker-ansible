@@ -1,6 +1,7 @@
 - hosts: localhost
   connection: local
-  sudo: yes
+  become: true
+  become_method: sudo
   vars:
     daemon_json:
       bip: 192.168.99.1/24
@@ -10,15 +11,21 @@
           path: /usr/bin/nvidia-container-runtime
           runtimeArgs: []
   tasks:
-    - name: remove nvidia-docker v1
-      apt:
-        name: nvidia-docker
-        state: removed
-        purge: yes
+    - name: docker | apt key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
     - name: nvidia-docker | apt key
       apt_key:
         url: https://nvidia.github.io/nvidia-docker/gpgkey
         state: present
+
+    - name: docker | apt repo
+      apt_repository: 
+        repo: deb https://download.docker.com/linux/ubuntu xenial stable
+        state: present
+
     - name: nvidia-docker | apt repo
       apt_repository:
         repo: "{{ item }}"
@@ -29,13 +36,17 @@
         - "deb https://nvidia.github.io/libnvidia-container/ubuntu16.04/amd64 /"
         - "deb https://nvidia.github.io/nvidia-container-runtime/ubuntu16.04/amd64 /"
         - "deb https://nvidia.github.io/nvidia-docker/ubuntu16.04/amd64 /"
+
     - name: nvidia-docker | install
       apt:
-        name: "{{ item }}"
+        name: "{{ packages }}"
         state: present
-      with_items:
-        - "nvidia-docker2=2.0.2+docker17.03.2-1"
-        - "nvidia-container-runtime=1.1.1+docker17.03.2-1"
+      vars:
+        packages:
+          - docker-ce
+          - nvidia-docker2
+          - nvidia-container-runtime
+
     - name: set docker default runtime
       copy:
         content: "{{ daemon_json | to_nice_json }}"
@@ -43,10 +54,12 @@
         owner: root
         group: root
         mode: 0644
+
     - name: docker | restart service
       service: name=docker state=restarted enabled=yes
+
     - name: clone a git repository
-      git: >
-        repo=ssh://git@github.com:EJSohn/nvidia-packer-docker-ansible.git
-        dest=/
-        version=master
+      git: 
+        repo: "https://github.com/EJSohn/nvidia-packer-docker-ansible.git"
+        dest: /var/www/
+        version: master
