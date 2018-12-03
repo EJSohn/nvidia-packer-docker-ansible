@@ -52,6 +52,5 @@ RUN git clone --depth 1 -b 3.4.1 https://github.com/opencv/opencv.git /opencv &&
 
 # Create workspace
 ADD . /code/
-ADD requirements.txt /code/
-RUN pip3 install -r /code/requirements.txt
+RUN pip3 install -r /code/requirements.txt || true
 WORKDIR /code
