@@ -1,0 +1,48 @@
+{
+    "variables": {
+        "region": "ap-northeast-2",
+        "source_ami": "ami-06e7b9c5e0c4dd014",
+        "subnet_id": "",
+        "vpc_id": "",
+        "aws_access_key": "",
+        "aws_secret_key": ""
+    },
+    "builders": [
+        {
+            "type": "amazon-ebs",
+            "access_key": "{{user `aws_access_key` }}",
+            "secret_key": "{{user `aws_secret_key` }}",
+            "region": "{{user `region`}}",
+            "source_ami": "{{user `source_ami`}}",
+            "ssh_username": "ubuntu",
+            "ami_name": "docker-gpu-{{isotime \"2006-01-02T15:04:05Z\" | clean_ami_name}}",
+            "instance_type": "p2.2xlarge",
+            "enhanced_networking": true,
+            "subnet_id": "{{user `subnet_id`}}",
+            "vpc_id": "{{user `vpc_id`}}",
+            "launch_block_device_mappings": [{
+                "delete_on_termination": true,
+                "device_name": "/dev/sda1",
+                "volume_size": 20,
+                "volume_type": "gp2"
+            }]
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline": [
+                "sudo pip install ansible"
+            ]
+        },
+        {
+            "type": "ansible-local",
+            "playbook_file": "ansible/playbook.yaml",
+            "role_paths": [
+                "ansible/roles/common"
+            ],
+            "playbook_dir": "ansible",
+            "galaxy_file": "ansible/requirements.yaml"
+        }
+    ]
+}
