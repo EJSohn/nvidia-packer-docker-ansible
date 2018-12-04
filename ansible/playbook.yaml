@@ -63,3 +63,6 @@
         repo: "https://github.com/EJSohn/nvidia-packer-docker-ansible.git"
         dest: /var/www/
         version: master
+    
+    - name: build docker image
+      command: nvidia-docker build -t deep-env:latest /var/www
