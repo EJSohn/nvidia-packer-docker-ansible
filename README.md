@@ -1,5 +1,7 @@
 # NVIDIA-PACKER-DOCKER-ANSIBLE
 
+packer, ansible, nvidia-docker를 사용한 자동 딥러닝 개발환경 생성 예제입니다.
+
 packer 명령어로 딥러닝에 사용될 nvidia-docker 이미지가 설치된 AWS AMI를 생성합니다.
 
 ## Quick Start
