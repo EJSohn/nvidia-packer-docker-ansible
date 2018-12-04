@@ -22,7 +22,7 @@
             "launch_block_device_mappings": [{
                 "delete_on_termination": true,
                 "device_name": "/dev/sda1",
-                "volume_size": 10,
+                "volume_size": 50,
                 "volume_type": "gp2"
             }]
         }
@@ -31,7 +31,13 @@
         {
             "type": "shell",
             "inline": [
-                "sudo apt update && sudo apt install -y python python-pip && sudo pip install ansible"
+                "sudo apt update && sudo rm /var/lib/dpkg/lock && sudo rm /var/lib/dpkg/lock-frontend"
+            ]
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "sudo pip install ansible"
             ]
         },
         {
