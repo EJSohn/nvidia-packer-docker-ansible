@@ -1,7 +1,7 @@
 {
     "variables": {
         "region": "ap-northeast-2",
-        "source_ami": "ami-0e0f4ff1154834540",
+        "source_ami": "ami-0ed2542c6f9e9a45c",
         "subnet_id": "",
         "vpc_id": "",
         "aws_access_key": "",
