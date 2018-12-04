@@ -18,7 +18,7 @@ root 디렉토리에서 다음의 명령어를 쳐주세요
 
 ```
 packer build \
-    -var 'subnet_id=subnet-9be79cd7' \
+    -var 'subnet_id=subnet-9be79cd7' \ # these are dummy values
     -var 'vpc_id=vpc-c3d83da8' \
     -var 'aws_access_key=AKIAINYA3F5XNCXKSCOA' \
     -var 'aws_secret_key=kyeqnlrvAH0goHSZRD9Sut0f5nCRDKWL7o2leGif' gpu-packer.json
