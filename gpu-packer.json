@@ -31,12 +31,6 @@
         {
             "type": "shell",
             "inline": [
-                "sudo apt update && sudo rm /var/lib/dpkg/lock && sudo rm /var/lib/dpkg/lock-frontend"
-            ]
-        },
-        {
-            "type": "shell",
-            "inline": [
                 "sudo pip install ansible"
             ]
         },

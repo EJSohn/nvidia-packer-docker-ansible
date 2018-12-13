@@ -20,6 +20,9 @@
       apt_key:
         url: https://nvidia.github.io/nvidia-docker/gpgkey
         state: present
+    
+    - name: Wait for automatic system updates to complete
+      shell: while pgrep unattended; do sleep 10; done;
 
     - name: docker | apt repo
       apt_repository: 
